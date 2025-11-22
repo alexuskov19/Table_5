@@ -1,0 +1,24 @@
+-- Join 2 tables and show coffee orders made in January 2025
+SELECT ll.User_ID, lc.User_ID, Item_Ordered, loan_date,Order_date, ll.Name
+FROM library_loan ll
+JOIN library_cafe lc
+ON ll.User_ID = lc.User_ID
+WHERE loan_date LIKE '2025-01%'
+AND Item_ordered Like 'Coffee';
+
+-- Join 2 tables and show Name, User ID and their total of books loans and total of money spent at the cafe
+SELECT ll.Name, lc.Name, ll.User_ID, lc.User_ID, 
+COUNT (Book_Title) AS books_total, 
+COUNT (Item_Ordered) AS total_orders,
+SUM(Amount) AS total_amount_spent
+FROM library_loan ll
+LEFT JOIN library_cafe lc
+ON ll.User_ID = lc.User_ID
+GROUP BY ll.Name;
+
+-- Join 2 tables and show Names and User ID where return date equals order date
+SELECT ll.Name, lc.Name, Return_Date, Order_Date
+FROM library_loan ll
+JOIN library_cafe lc 
+ON ll.User_ID = lc.User_ID
+WHERE Return_date = Order_Date;
